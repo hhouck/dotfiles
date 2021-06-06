@@ -16,6 +16,7 @@ set splitbelow
 set splitright
 set t_Co=256
 set conceallevel=0
+set termguicolors
 set tabstop=2
 set autoindent
 set laststatus=0
@@ -35,22 +36,20 @@ set smarttab
 set hlsearch
 set smartcase
 set linebreak
+set noswapfile
 
 " Plugins
 
 call plug#begin('~/.config/nvim/autoload/plugged')
 
-	Plug 'vim-airline/vim-airline'
-	Plug 'leafgarland/typescript-vim'
+  Plug 'leafgarland/typescript-vim'
 	Plug 'mbbill/undotree'
 	Plug 'preservim/nerdtree'
-	Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
 	Plug 'godlygeek/tabular'
 	Plug 'plasticboy/vim-markdown'
 	Plug 'jiangmiao/auto-pairs'
 	Plug 'vimwiki/vimwiki'
-	Plug 'sainnhe/gruvbox-material'
-	Plug 'sheerun/vim-polygot'
 	Plug 'christoomey/vim-tmux-navigator'
 	Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 	Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -60,12 +59,27 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 	Plug 'junegunn/fzf.vim'
 	Plug 'junegunn/goyo.vim'
 	Plug 'scrooloose/nerdcommenter'
+	Plug 'zchee/deoplete-jedi'
+"	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+	Plug 'nvim-lua/popup.nvim'
+  Plug 'nvim-lua/plenary.nvim'
+"  Plug 'nvim-telescope/telescope.nvim'
+  Plug 'sainnhe/gruvbox-material'	
+"	Plug 'neovim/nvim-lspconfig'
+  Plug 'vim-pandoc/vim-pandoc'
+	Plug 'vim-pandoc/vim-pandoc-syntax'
+	Plug 'vim-airline/vim-airline'
+	Plug 'vim-airline/vim-airline-themes'
+	Plug 'morhetz/gruvbox'
+call plug#end()
 
-	call plug#end()
+let g:gruvbox_italic=1
 
-colorscheme gruvbox-material
+colorscheme gruvbox
 
-source $HOME/.config/nvim/plug-config/coc.vim
+
+
+" source $HOME/.config/nvim/plug-config/coc.vim
 
 
 " Keybinds
@@ -100,10 +114,18 @@ nnoremap <S-TAB> 		:bprevious<CR>
 " Alternate way to quit
 nnoremap <C-s> 			:w<CR>
 
+let g:vimwiki_table_mappings = 0
+
+let g:airline_theme='gruvbox-light-soft'
+
 " Alternate way to quit
 nnoremap <C-Q> 			:wq!<CR>
 
-" Use control-c instead of escape
+" Autocomplete for coc
+inoremap <silent><expr> <tab> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<TAB>"
+inoremap <silent><expr> <cr> "\<c-g>u\<CR>"
+
+"Use control-c instead of escape
 nnoremap <C-c> <Esc>
 
 " <TAB>: completion.
@@ -121,3 +143,19 @@ nnoremap <C-l> <C-w>l
 
 nnoremap <Leader>o o<Esc>^Da
 nnoremap <Leader>O O<Esc>^Da
+
+let g:deoplete#enable_at_startup = 1
+let g:airline_theme='<theme' " <theme> is a valid theme name
+
+" Enable alignment
+let g:neoformat_basic_format_align = 1
+
+" Enable tab to space conversion
+let g:neoformat_basic_format_retab = 1
+
+" Enable trimmming of trailing whitespace
+let g:neoformat_basic_format_trim = 1
+
+
+" open the go-to function in split, not another buffer
+let g:jedi#use_splits_not_buffers = "right"
